@@ -1,38 +1,25 @@
 import React, { Component } from 'react';
 
 class Box extends Component {
-    state = { 
-        x:0,
-        colors: [],
-     };
+   
 
-    handleLeftClick = (step) => {
-        this.setState({
-            x: this.state.x  - step,
-        })
-        console.log('left', this);
-    };
-
-    handleRightClick = (step) => {
-        this.setState({
-            x: this.state.x  + step,
-        })
-        console.log('right', this);
-    };
-    handleRightClickTmp = () =>  {
-        return this.handleRightClick(10);
-    };
+    
+   
     
 
     render() { 
         return (
             <React.Fragment>
+            {this.props.children[0]}
             <div style={this.getStyles()}>{this.toString()}</div>
-            <button onClick={() => this.handleLeftClick(10)} className='btn btn-primary m-2'>左边</button>
-            <button onClick={this.handleRightClickTmp} className='btn btn-danger m-2'>右边 </button>
-            {this.state.colors.map(x => {
+            <button onClick={this.props.onLeft} className='btn btn-primary m-2'>左边</button>
+            <button  onClick={this.props.onRight} className='btn btn-danger m-2'>右边 </button>
+            <button onClick={() => this.props.onDelete(this.props.id)} className='btn btn-danger m-2'>删除</button>
+            {/* {this.box.colors.map(x => {
                  return <div key={x}>{x}</div>
-             })}
+             })} */}
+
+            {this.props.children[1]}
             </React.Fragment>
         );
     };
@@ -45,16 +32,16 @@ class Box extends Component {
             color:"white",
             lineHeight:"100px",
             textAlign:"center",
-            marginLeft: this.state.x
+            marginLeft: this.props.box.x
         };
 
-        if (this.state.x === 0 ) {
+        if (this.props.box.x === 0 ) {
             styles.backgroundColor = "orange";
         }
         return styles;
     }
     toString() {
-        const {x} = this.state;
+        const {x} = this.props.box;
         return `${x}`;
     }
 }
